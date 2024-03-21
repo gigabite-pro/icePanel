@@ -17,3 +17,9 @@ IcePanel engineering interview task boilerplate
 # What did I learn?
 
 This was my first time using Vue and Tailwind so I faced a lot of issues to integrate them. Since I know React, I was able to catch up with Vue and create a minimum viable product. I know I took a lot of time but I wanted to submit the best results.
+
+# Time Estimate
+
+-   I took about 5 hours to complete the whole task.
+-   Frontend took about 4 hours since I was not familiar with Vue and Tailwind.
+-   Backend took about 1 hour to setup everything and use Typescript to write Express.js code.
