@@ -7,6 +7,8 @@ IcePanel engineering interview task boilerplate
 -   Use `npm i` to install dependencies in both frontend and backend directories.
 -   Create a .env file in the backend directory and enter the following `MONGO_URI = mongodb+srv://rajmachawal19:o1EqmAt0fHf0kyrg@icepanel.rvo1far.mongodb.net/?retryWrites=true&w=majority&appName=IcePanel`
 -   Run `npm run dev` in both directories to start the servers.
+-   A SMALL BUG MIGHT OCCUR - you may see a very narrow form (it's something to do with typescript warnings.)
+-   WHAT YOU CAN DO? - Go to VForm.vue in ./frontend/src/components and change the `text-4xl` to `text-3xl` and save the file. It should solve the error.
 
 # What have I used?
 

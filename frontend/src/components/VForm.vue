@@ -41,7 +41,7 @@ export default {
 <template>
   <form action="http://localhost:3000/requests/submit" method="POST" class="bg-[#1E1F20] rounded">
     <div class="border-b border-gray-900/10 p-12">
-      <h1 class="mb-7 text-base font-semibold text-3xl text-white">Technology choice request</h1>
+      <h1 class="mb-7 text-base font-semibold text-4xl text-white">Technology choice request</h1>
       <VTechName :techNameCheck="techNameCheck" />
       <VDescription :descriptionCheck="descriptionCheck" />
       <VIcon :iconCheck="iconCheck" />
