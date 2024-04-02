@@ -26,12 +26,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const emit = defineEmits(['updateTechNameCheck'])
 
 let inputvalue = ref('')
 let status = ref(null)
+
+onMounted(() => {
+  handleInput()
+})
 
 function handleInput() {
   if (inputvalue.value.length < 1) {

@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue'
 const props = defineProps({
   type: String,
   text: String,
@@ -34,9 +34,10 @@ const props = defineProps({
 const emit = defineEmits(['updateWebsiteCheck'])
 
 let inputvalue = ref('')
-watchEffect(() => {
-  if (props.type === 'website') {
+
+onMounted(() => {
+  watchEffect(() => {
     emit('updateWebsiteCheck', inputvalue.value.length > 0 && inputvalue.value.includes('http'))
-  }
+  })
 })
 </script>

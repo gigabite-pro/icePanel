@@ -23,20 +23,19 @@ router.get('/verifyName', async (req, res) => {
 })
 
 router.post('/submit', async (req, res) => {
-    const {techName, description, fileUrl, websiteUrl, docsUrl, changelogUrl, brandColorName, brandColorHex, availability} = req.body;
-
-    const toBeStoredAvailability = availability === 'no' ? false : true;
+    const {techName, description, fileUrl, websiteUrl, docsUrl, changelogUrl, brandColorName, brandColorHex, abstractionModel, availability} = req.body;
 
     const request = {
         techName: techName.toLowerCase(),
         description,
-        fileUrl,
-        websiteUrl,
-        docsUrl,
-        changelogUrl,
+        abstractionModel,
+        icon: fileUrl,
+        website: websiteUrl,
+        docs: docsUrl,
+        changelog: changelogUrl,
         brandColorName,
         brandColorHex,
-        availability: toBeStoredAvailability
+        availability: availability == 'on' ? true : false
     }
 
     const result = await collection.insertOne(request);

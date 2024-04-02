@@ -4,6 +4,7 @@ import VTechName from '../components/VTechName.vue'
 import VIcon from '../components/VIcon.vue'
 import VInput from '../components/VInput.vue'
 import VBrandColor from '../components/VBrandColor.vue'
+import VAbstractionModel from '../components/VAbstractionModel.vue'
 import VAvailability from '../components/VAvailability.vue'
 import VSubmit from '../components/VSubmit.vue'
 import { ref } from 'vue'
@@ -33,9 +34,10 @@ function handleUpdateWebsiteCheck(value: boolean) {
 <template>
   <form action="http://localhost:3000/requests/submit" method="POST" class="bg-[#1E1F20] rounded">
     <div class="border-b border-gray-900/10 p-12">
-      <h1 class="mb-7 text-base font-semibold text-3xl text-white">Technology choice request</h1>
+      <h1 class="mb-7 text-3xl font-semibold text-white">Technology choice request</h1>
       <VTechName @updateTechNameCheck="handleUpdateTechNameCheck" />
       <VDescription @updateDescriptionCheck="handleUpdateDescriptionCheck" />
+      <VAbstractionModel />
       <VIcon @updateIconCheck="handleUpdateIconCheck" />
       <VInput
         :type="'website'"

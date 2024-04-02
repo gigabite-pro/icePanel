@@ -15,12 +15,14 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue'
 const emit = defineEmits(['updateDescriptionCheck'])
 
 let inputvalue = ref('')
 
-watchEffect(() => {
-  emit('updateDescriptionCheck', inputvalue.value.length > 0)
+onMounted(() => {
+  watchEffect(() => {
+    emit('updateDescriptionCheck', inputvalue.value.length > 0)
+  })
 })
 </script>

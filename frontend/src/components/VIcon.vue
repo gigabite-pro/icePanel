@@ -2,7 +2,11 @@
   <label class="block mt-5">
     <span class="mb-1 lock text-sm font-light text-white">Icon</span>
     <div
-      class="bg-[#4C505240] flex justify-center rounded border border-dashed border-[#434547] px-6 py-3"
+      class="flex justify-center rounded border border-dashed px-6 py-3"
+      :class="{
+        'bg-[#4C505240] border-[#434547]': fileStatus == false,
+        'bg-[#1BCBF50D] border-[#1BCBF5]': fileStatus == true
+      }"
     >
       <div class="text-center">
         <div class="flex text-sm leading-6 text-[#84898C]">
@@ -19,6 +23,7 @@
         <p v-if="fileStatus == false" class="text-xs leading-5 text-[#84898C]">
           Format: SVG/PNG/JPEG
         </p>
+        <p v-if="fileStatus == null" class="text-xs leading-5 text-[#84898C]">Uploading...</p>
         <p v-if="fileStatus == true" class="text-xs leading-5 text-[#84898C]">
           File uploaded successfully
         </p>
@@ -78,6 +83,7 @@ function handleClick() {
   const input = document.createElement('input')
   input.type = 'file'
   input.onchange = (e) => {
+    fileStatus.value = null
     const file = e.target.files[0]
     const reader = new FileReader()
     reader.readAsDataURL(file)
