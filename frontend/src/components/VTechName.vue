@@ -25,27 +25,26 @@
   </label>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      inputvalue: '',
-      status: null
-    }
-  },
-  methods: {
-    handleInput() {
-      if (this.inputvalue.length < 1) {
-        this.status = null
-        return
-      }
-      fetch(`http://localhost:3000/requests/verifyName?name=${this.inputvalue}`, { method: 'GET' })
-        .then((res) => res.json())
-        .then((data) => {
-          this.status = data.status
-        })
-        .catch((err) => console.log(err))
-    }
+<script setup>
+import { ref } from 'vue'
+
+const emit = defineEmits(['updateTechNameCheck'])
+
+let inputvalue = ref('')
+let status = ref(null)
+
+function handleInput() {
+  if (inputvalue.value.length < 1) {
+    status.value = null
+    emit('updateTechNameCheck', false)
+    return
   }
+  fetch(`http://localhost:3000/requests/verifyName?name=${inputvalue.value}`, { method: 'GET' })
+    .then((res) => res.json())
+    .then((data) => {
+      status.value = data.status
+      emit('updateTechNameCheck', !data.status)
+    })
+    .catch((err) => console.log(err))
 }
 </script>

@@ -8,7 +8,19 @@
       aria-describedby="helper-text-explanation"
       class="mt-0.5 h-15 resize-none bg-[#3B3C3E40] border border-[#4C5052] w-full text-white text-sm rounded focus:ring-blue-500 focus:border-blue-500 block placeholder:text-[#84898C]"
       placeholder="e.g. A C4 model diagramming and modelling tool for agile teams to align on technical decisions."
+      v-model="inputvalue"
     ></textarea>
     <p class="mt-1 text-[#84898C] text-xs">For people new to this technology</p>
   </label>
 </template>
+
+<script setup>
+import { ref, watchEffect } from 'vue'
+const emit = defineEmits(['updateDescriptionCheck'])
+
+let inputvalue = ref('')
+
+watchEffect(() => {
+  emit('updateDescriptionCheck', inputvalue.value.length > 0)
+})
+</script>

@@ -36,7 +36,14 @@
   </label>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
+
+const fileStatus = ref(false)
+const fileUrl = ref('')
+
+const emit = defineEmits(['updateIconCheck'])
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCXUiEl4J6fjI4puMxGmwKP6xxK5Zh5nPE',
   authDomain: 'icepanel-305a5.firebaseapp.com',
@@ -48,43 +55,59 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-export default {
-  data() {
-    return {
-      fileStatus: false,
-      file: null,
-      fileUrl: ''
+function handleClick() {
+  function getFileInfoFromBase64(base64String) {
+    const parts = base64String.split(',')
+
+    if (parts.length < 2) {
+      return { fileType: null }
     }
-  },
-  methods: {
-    handleClick() {
-      const input = document.createElement('input')
-      input.type = 'file'
-      input.onchange = (e) => {
-        const file = e.target.files[0]
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = (readerEvent) => {
-          this.file = readerEvent.target.result
 
-          const ref = firebase.storage().ref()
-          const file = this.file
-          const name = `${new Date()}-${file.name}`
-          const metadata = {
-            contentType: file.type
-          }
-          const task = ref.child(name).put(file, metadata)
+    const metadata = parts[0]
 
-          task
-            .then((snapshot) => snapshot.ref.getDownloadURL())
-            .then((url) => {
-              this.fileUrl = url
-              this.fileStatus = true
-            })
-        }
+    const metadataParts = metadata.split(';')
+    if (metadataParts.length !== 2) {
+      return { fileType: null }
+    }
+
+    const fileType = metadataParts[0].split(':')[1]
+
+    return { fileType }
+  }
+
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.onchange = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (readerEvent) => {
+      const { fileType } = getFileInfoFromBase64(readerEvent.target.result)
+
+      var byteCharacters = atob(readerEvent.target.result.split(',')[1])
+      var byteNumbers = new Array(byteCharacters.length)
+      for (var i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i)
       }
-      input.click()
+      var byteArray = new Uint8Array(byteNumbers)
+      var blob = new Blob([byteArray], { type: fileType })
+
+      const ref = firebase.storage().ref()
+      const name = `${new Date()}-icePanelIcon`
+      const metadata = {
+        contentType: fileType
+      }
+      const task = ref.child(name).put(blob, metadata)
+
+      task
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then((url) => {
+          fileUrl.value = url
+          fileStatus.value = true
+          emit('updateIconCheck', true)
+        })
     }
   }
+  input.click()
 }
 </script>

@@ -13,12 +13,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      availability: false
-    }
-  }
-}
+<script setup>
+import { ref } from 'vue'
+
+const availability = ref(false)
 </script>

@@ -9,7 +9,7 @@ const router = Router();
 router.get('/verifyName', async (req, res) => {
     const name = req.query.name as string;
 
-    const user = await collection.findOne({name: name.toLowerCase()});
+    const user = await collection.findOne({techName: name.toLowerCase()});
 
     if(user) {
         return res.json({
@@ -25,6 +25,8 @@ router.get('/verifyName', async (req, res) => {
 router.post('/submit', async (req, res) => {
     const {techName, description, fileUrl, websiteUrl, docsUrl, changelogUrl, brandColorName, brandColorHex, availability} = req.body;
 
+    const toBeStoredAvailability = availability === 'no' ? false : true;
+
     const request = {
         techName: techName.toLowerCase(),
         description,
@@ -34,7 +36,7 @@ router.post('/submit', async (req, res) => {
         changelogUrl,
         brandColorName,
         brandColorHex,
-        availability
+        availability: toBeStoredAvailability
     }
 
     const result = await collection.insertOne(request);

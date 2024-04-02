@@ -1,10 +1,8 @@
-<script lang="ts">
+<script lang="ts" setup>
 import VDescription from '../components/VDescription.vue'
 import VTechName from '../components/VTechName.vue'
 import VIcon from '../components/VIcon.vue'
-import VWebsite from '../components/VWebsite.vue'
-import VDocs from '../components/VDocs.vue'
-import VChangelog from '../components/VChangelog.vue'
+import VInput from '../components/VInput.vue'
 import VBrandColor from '../components/VBrandColor.vue'
 import VAvailability from '../components/VAvailability.vue'
 import VSubmit from '../components/VSubmit.vue'
@@ -15,39 +13,42 @@ const descriptionCheck = ref(false)
 const iconCheck = ref(false)
 const websiteCheck = ref(false)
 
-export default {
-  components: {
-    VDescription,
-    VTechName,
-    VIcon,
-    VWebsite,
-    VDocs,
-    VChangelog,
-    VBrandColor,
-    VAvailability,
-    VSubmit
-  },
-  data() {
-    return {
-      techNameCheck,
-      descriptionCheck,
-      iconCheck,
-      websiteCheck
-    }
-  }
+function handleUpdateTechNameCheck(value: boolean) {
+  techNameCheck.value = value
+}
+
+function handleUpdateDescriptionCheck(value: boolean) {
+  descriptionCheck.value = value
+}
+
+function handleUpdateIconCheck(value: boolean) {
+  iconCheck.value = value
+}
+
+function handleUpdateWebsiteCheck(value: boolean) {
+  websiteCheck.value = value
 }
 </script>
 
 <template>
   <form action="http://localhost:3000/requests/submit" method="POST" class="bg-[#1E1F20] rounded">
     <div class="border-b border-gray-900/10 p-12">
-      <h1 class="mb-7 text-base font-semibold text-4xl text-white">Technology choice request</h1>
-      <VTechName :techNameCheck="techNameCheck" />
-      <VDescription :descriptionCheck="descriptionCheck" />
-      <VIcon :iconCheck="iconCheck" />
-      <VWebsite :websiteCheck="websiteCheck" />
-      <VDocs />
-      <VChangelog />
+      <h1 class="mb-7 text-base font-semibold text-3xl text-white">Technology choice request</h1>
+      <VTechName @updateTechNameCheck="handleUpdateTechNameCheck" />
+      <VDescription @updateDescriptionCheck="handleUpdateDescriptionCheck" />
+      <VIcon @updateIconCheck="handleUpdateIconCheck" />
+      <VInput
+        :type="'website'"
+        :text="'Website URL'"
+        :placeholder="'e.g. icepanel.io'"
+        @updateWebsiteCheck="handleUpdateWebsiteCheck"
+      />
+      <VInput :type="'docs'" :text="'Docs URL'" :placeholder="'e.g. docs.icepanel.io'" />
+      <VInput
+        :type="'changelog'"
+        :text="'Change Log'"
+        :placeholder="'e.g. icepanel.io/changelog'"
+      />
       <VBrandColor />
       <VAvailability />
       <VSubmit
