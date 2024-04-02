@@ -58,7 +58,9 @@ const firebaseConfig = {
   appId: '1:625468169429:web:df42ef8d9dffb2748f965c'
 }
 
-firebase.initializeApp(firebaseConfig)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 function handleClick() {
   function getFileInfoFromBase64(base64String) {

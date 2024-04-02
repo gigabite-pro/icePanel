@@ -35,7 +35,8 @@ router.post('/submit', async (req, res) => {
         changelog: changelogUrl,
         brandColorName,
         brandColorHex,
-        availability: availability == 'on' ? true : false
+        availability: availability == 'on' ? true : false,
+        status: 'pending',
     }
 
     const result = await collection.insertOne(request);
